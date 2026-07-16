@@ -1,0 +1,7 @@
+project/
+│── index.html
+│── login.html
+│── dashboard.html
+│── style.css
+│── script.js
+│── images/
