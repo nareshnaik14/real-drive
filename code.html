@@ -3,36 +3,40 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Velocity HUD - Wallet &amp; Store</title>
+<title>Velocity HUD - Marketplace</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Hanken+Grotesk:wght@300;400;500;600&amp;family=Geist:wght@100;300;400;500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Hanken+Grotesk:wght@300;400;500;600&amp;family=Geist:wght@400;500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:wght@100..900&amp;family=Space+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"/>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .neon-glow-cyan {
-            text-shadow: 0 0 8px rgba(0, 241, 254, 0.6);
-        }
-        .neon-border-cyan {
-            box-shadow: 0 0 15px rgba(0, 241, 254, 0.15), inset 0 0 5px rgba(0, 241, 254, 0.1);
-        }
         .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .glass-panel-accent {
-            border-top: 1px solid rgba(0, 241, 254, 0.3);
-            border-left: 1px solid rgba(0, 241, 254, 0.1);
+        .cyber-glow {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
         }
-        @keyframes flow {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        .cyber-glow-hover:hover {
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
+            border-color: rgba(0, 242, 255, 0.5);
         }
-        .animate-flow {
-            animation: flow 2s linear infinite;
+        .segmented-progress {
+            display: flex;
+            gap: 2px;
+        }
+        .segment {
+            height: 4px;
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .segment-active {
+            background: #00F2FF;
+            box-shadow: 0 0 8px #00F2FF;
         }
         ::-webkit-scrollbar {
             width: 4px;
@@ -41,7 +45,7 @@
             background: #051424;
         }
         ::-webkit-scrollbar-thumb {
-            background: #00f1fe;
+            background: #00F2FF;
             border-radius: 10px;
         }
     </style>
@@ -131,260 +135,303 @@
         }
     </script>
 </head>
-<body class="bg-surface text-on-surface font-body-lg overflow-x-hidden">
-<!-- Background Shader -->
-<div class="fixed inset-0 z-0">
+<body class="bg-background text-on-surface font-body-lg min-h-screen overflow-x-hidden pb-24">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(0,241,254,0.15)] z-[100] h-16 flex justify-between items-center px-margin-mobile md:px-margin-desktop bg-surface/10">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full border border-secondary-container overflow-hidden cyber-glow">
+<img class="w-full h-full object-cover" data-alt="A futuristic pilot profile avatar, close-up, wearing a high-tech chrome helmet with a neon cyan visor. The background is a dark, tech-infused cockpit with glowing interface elements. Professional digital art style, high contrast, cyber-glassmorphism aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASOgZhOr15PYiXHBtM3aUxG5cM3s-hRKP0ZOyRSZHCMcV3331PyqlUnwP_XVTDYNiJzAgFqlnL9Fc7JvhA1xRO9fSOd01stzvk1OcQyEC-MvRy7Blg5f9tBxtyYucHugPeOU_pgjA6Lzl_tf5CJ3Q3ls_LiY-8gt5Rd5NuUv8ZDvfy9OBILwyBQT76l9PD0VJtUTsroIVQnq-WnLGKvKtRy898DbPLC0_m8cWjgBdQuGO6bdXPu9by"/>
+</div>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-secondary drop-shadow-[0_0_8px_rgba(0,241,254,0.3)] font-bold tracking-tight">VELOCITY HUD</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8 font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">
+<a class="text-secondary font-bold" href="#">Market</a>
+<a class="hover:text-secondary transition-all duration-300" href="#">Map</a>
+<a class="hover:text-secondary transition-all duration-300" href="#">Social</a>
+</div>
+<div class="flex items-center gap-2 px-4 py-1.5 glass-panel rounded-full border-secondary/30">
+<span class="material-symbols-outlined text-secondary-container text-sm" style="font-variation-settings: 'FILL' 1;">toll</span>
+<span class="text-secondary font-bold font-label-sm">12,450 CR</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Search & Global Filters -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row gap-6 items-end justify-between">
+<div class="w-full md:w-1/3">
+<label class="font-label-sm text-label-sm text-secondary/60 mb-2 block uppercase tracking-widest">Search Inventory</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary-container transition-colors">search</span>
+<input class="w-full bg-surface-container/30 border-x-0 border-t-0 border-b-2 border-outline-variant focus:border-secondary-container focus:ring-0 text-on-surface font-label-sm pl-12 py-3 backdrop-blur-md transition-all" placeholder="MODEL OR SPEC..." type="text"/>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<button class="flex items-center gap-2 px-6 py-2 border-2 border-secondary-container/30 rounded-lg hover:border-secondary-container transition-all cyber-glow-hover group">
+<span class="material-symbols-outlined text-secondary-container group-hover:scale-110 transition-transform">filter_list</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary">Owned Only</span>
+</button>
+<div class="h-10 w-[1px] bg-white/10 hidden md:block"></div>
+<div class="flex glass-panel rounded-lg p-1">
+<button class="px-4 py-2 bg-secondary-container text-surface-dim font-bold font-label-sm rounded uppercase">Buy</button>
+<button class="px-4 py-2 text-on-surface-variant hover:text-secondary font-label-sm rounded uppercase transition-colors">Sell</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Category Tabs -->
+<nav class="flex gap-2 mb-8 overflow-x-auto pb-4 scrollbar-hide">
+<button class="px-8 py-3 rounded-full bg-secondary-container text-surface-dim font-bold font-label-sm uppercase tracking-widest flex items-center gap-2 cyber-glow">
+<span class="material-symbols-outlined">directions_car</span>
+                Cars
+            </button>
+<button class="px-8 py-3 rounded-full border border-white/10 text-on-surface-variant font-medium font-label-sm uppercase tracking-widest flex items-center gap-2 hover:border-secondary/50 transition-all">
+<span class="material-symbols-outlined">motorcycle</span>
+                Bikes
+            </button>
+<button class="px-8 py-3 rounded-full border border-white/10 text-on-surface-variant font-medium font-label-sm uppercase tracking-widest flex items-center gap-2 hover:border-secondary/50 transition-all">
+<span class="material-symbols-outlined">local_shipping</span>
+                Trucks
+            </button>
+</nav>
+<!-- Marketplace Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Vehicle Card 1 -->
+<div class="glass-panel rounded-xl overflow-hidden cyber-glow-hover transition-all duration-500 group relative">
+<div class="absolute top-4 right-4 z-10">
+<span class="px-3 py-1 bg-tertiary/10 text-tertiary border border-tertiary/30 rounded-full font-label-sm text-xs uppercase">Rare Elite</span>
+</div>
+<div class="h-64 relative bg-gradient-to-b from-primary-container to-surface-dim overflow-hidden">
+<div class="absolute inset-0 opacity-40 mix-blend-overlay">
 
 </div>
-<!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full backdrop-blur-xl bg-surface/10 border-b border-white/10 shadow-[0_0_15px_rgba(0,241,254,0.15)] z-[100] h-16 flex justify-between items-center px-margin-mobile md:px-margin-desktop">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full border border-secondary-container/50 overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A futuristic portrait of a high-tech pilot wearing a sleek helmet with glowing cyan HUD elements. The character has a determined expression, with reflections of a digital cockpit visible on the visor. The overall style is high-contrast, cinematic, and set in a dark sci-fi universe with neon blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6meKiZTu8MoWMLbdJWX5KAI5ocTdK8Na6nIVifAcwuo5wFVvBWr8TvWUBKDKuWiPiX7xELcK3cJsQUHSXMl57EQUulsaL_0PfxtJDaUrocWb0HDqWus2dOu2Vux7LdF-yx7WnXTRM3sPJmOa4FRC9nxFlslCEj1ttZlKLoD7Uyxv31yBJAfbrzeKrfgL_XqsGWftjK78AjK51Dwdb3mpCRzzGyoiHqyFLxhtV5Ua5Ea2VH4MltHGL"/>
+<img class="w-full h-full object-cover relative z-1 group-hover:scale-110 transition-transform duration-700" data-alt="A sleek 3/4 top-down view of a futuristic electric hypercar with glowing cyan neon wheel rims and aerodynamic carbon fiber body. The car is showcased in a high-tech virtual garage with reflecting floor tiles and volumetric blue lighting. Modern cyber-glassmorphism style, razor sharp detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3_-ZFphheib7WXsuO9htQofrVlv7OfnoXWmnEyrNFPMPCjFyPz8Vsx-XefFEoANO54pfSGcAEso69ObcK270XdYpvZP2E5vezqc1b45l_Xm7PvOaTFzGXhqK22ReR4hjg9GqtTJgvBRtuWZORytzALU15-qWpada7vn1_GVLvYD26Mut3pwzVX8S7prZE5byeOF8LbqzCyXrJY17TFZjzWkltiBK39lZcQm0QbAkZP2b7FM2u9J9r"/>
 </div>
-<span class="font-display-lg-mobile text-display-lg-mobile text-secondary drop-shadow-[0_0_8px_rgba(0,241,254,0.3)] font-bold tracking-tight">VELOCITY HUD</span>
-</div>
-<div class="flex items-center gap-4">
-<div class="hidden md:flex items-center gap-6 mr-8">
-<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-all" href="#">Map</a>
-<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-all" href="#">Market</a>
-<a class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold" href="#">Store</a>
-<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-all" href="#">Social</a>
-</div>
-<button class="bg-secondary-container/10 border border-secondary-container/30 px-4 py-1.5 rounded-full flex items-center gap-2 group hover:bg-secondary-container/20 transition-all">
-<span class="material-symbols-outlined text-secondary-container">account_balance_wallet</span>
-<span class="font-headline-md text-[18px] text-secondary font-bold">12,450 CR</span>
-</button>
-</div>
-</nav>
-<!-- Main Content Canvas -->
-<main class="relative z-10 pt-24 pb-32 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-<!-- Left Column: Balance & Progress -->
-<div class="lg:col-span-8 flex flex-col gap-8">
-<!-- Hero Balance Card -->
-<section class="glass-panel glass-panel-accent rounded-xl p-8 relative overflow-hidden">
-<div class="absolute top-0 right-0 w-64 h-64 bg-secondary-container/5 rounded-full blur-[80px] -mr-32 -mt-32"></div>
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="p-6 border-t border-white/5">
+<div class="flex justify-between items-start mb-4">
 <div>
-<h2 class="font-label-sm text-label-sm text-secondary-container uppercase tracking-widest mb-2">Total Credit Balance</h2>
-<div class="flex items-baseline gap-3">
-<span class="font-display-lg text-display-lg text-on-surface neon-glow-cyan">12,450.00</span>
-<span class="font-headline-md text-secondary-container/60">CR</span>
+<h3 class="font-headline-md text-headline-md text-secondary font-bold">VX-9 INTERCEPTOR</h3>
+<p class="text-on-surface-variant font-label-sm uppercase tracking-widest">Aero-Dynamic Class 5</p>
+</div>
+<div class="text-right">
+<span class="block text-secondary-container font-bold text-xl">4,200 CR</span>
+<span class="text-on-surface-variant text-xs uppercase tracking-tighter">Current Value</span>
+</div>
+</div>
+<div class="space-y-4 mb-6">
+<div>
+<div class="flex justify-between font-label-sm text-xs uppercase mb-1">
+<span class="text-on-surface-variant">Acceleration</span>
+<span class="text-secondary">92%</span>
+</div>
+<div class="segmented-progress">
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment"></div>
+<div class="segment"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-xs uppercase mb-1">
+<span class="text-on-surface-variant">Top Speed</span>
+<span class="text-secondary">88%</span>
+</div>
+<div class="segmented-progress">
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment"></div>
+<div class="segment"></div>
+<div class="segment"></div>
+</div>
 </div>
 </div>
 <div class="flex gap-4">
-<button class="bg-secondary-container text-surface px-6 py-3 rounded-lg font-bold flex items-center gap-2 active:scale-95 transition-transform">
-<span class="material-symbols-outlined">add_circle</span>
-                                TOP UP
-                            </button>
-<button class="border-2 border-secondary-container/30 text-secondary-container px-6 py-3 rounded-lg font-bold flex items-center gap-2 hover:bg-secondary-container/5 transition-all">
-<span class="material-symbols-outlined">send</span>
-                                TRANSFER
-                            </button>
-</div>
-</div>
-<!-- Earned Credits Mini-Dashboard -->
-<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-<div class="space-y-4">
-<div class="flex justify-between items-center">
-<span class="font-label-sm text-on-surface-variant">DISTANCE MILESTONE (KM)</span>
-<span class="font-label-sm text-tertiary">78% EARNED</span>
-</div>
-<div class="h-4 bg-surface-container-highest rounded-full overflow-hidden border border-white/5 relative">
-<div class="h-full bg-secondary-container shadow-[0_0_10px_#00f1fe]" style="width: 78.4%">
-<div class="w-full h-full animate-flow bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
-</div>
-</div>
-<div class="flex justify-between font-label-sm text-on-surface-variant">
-<span>2,450 / 3,000 KM</span>
-<span class="text-secondary-container">+450 CR REWARD</span>
-</div>
-</div>
-<div class="space-y-4">
-<div class="flex justify-between items-center">
-<span class="font-label-sm text-on-surface-variant">DAILY VELOCITY BONUS</span>
-<span class="font-label-sm text-tertiary">COMPLETED</span>
-</div>
-<div class="h-4 bg-surface-container-highest rounded-full overflow-hidden border border-white/5">
-<div class="h-full bg-tertiary shadow-[0_0_10px_#2ae500]" style="width: 100%"></div>
-</div>
-<div class="flex justify-between font-label-sm text-on-surface-variant">
-<span>100 / 100 KM</span>
-<span class="text-tertiary">+100 CR ADDED</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Transaction History -->
-<section class="glass-panel rounded-xl p-8">
-<div class="flex justify-between items-center mb-8">
-<h3 class="font-headline-md text-headline-md text-on-surface">Recent Transactions</h3>
-<button class="text-secondary-container font-label-sm hover:underline">VIEW ALL</button>
-</div>
-<div class="space-y-4">
-<!-- Transaction Item -->
-<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center">
-<span class="material-symbols-outlined text-tertiary">speed</span>
-</div>
-<div>
-<p class="font-body-lg text-on-surface font-medium">Earned: Distance Milestone</p>
-<p class="text-[14px] text-on-surface-variant">Mar 24, 2024 • 14:22</p>
-</div>
-</div>
-<span class="font-headline-md text-tertiary">+250.00 CR</span>
-</div>
-<!-- Transaction Item -->
-<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary-container">shopping_bag</span>
-</div>
-<div>
-<p class="font-body-lg text-on-surface font-medium">Purchased: Nitro Booster (x5)</p>
-<p class="text-[14px] text-on-surface-variant">Mar 23, 2024 • 09:15</p>
-</div>
-</div>
-<span class="font-headline-md text-on-surface">-1,200.00 CR</span>
-</div>
-<!-- Transaction Item -->
-<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary-container">account_balance</span>
-</div>
-<div>
-<p class="font-body-lg text-on-surface font-medium">Wallet Top-up: GPay UPI</p>
-<p class="text-[14px] text-on-surface-variant">Mar 22, 2024 • 18:45</p>
-</div>
-</div>
-<span class="font-headline-md text-secondary-container">+5,000.00 CR</span>
-</div>
-</div>
-</section>
-</div>
-<!-- Right Column: Store/Buy Credits -->
-<aside class="lg:col-span-4 flex flex-col gap-8">
-<!-- Purchase Credits Bento -->
-<section class="glass-panel rounded-xl p-8 flex flex-col gap-6">
-<h3 class="font-headline-md text-headline-md text-secondary-container">Buy Credits</h3>
-<div class="grid grid-cols-1 gap-4">
-<!-- Bundle 1 -->
-<div class="group relative p-4 rounded-xl border border-secondary-container/20 hover:border-secondary-container transition-all cursor-pointer bg-surface-container-lowest/50">
-<div class="flex justify-between items-center">
-<div>
-<p class="font-label-sm text-on-surface-variant">STARTER PACK</p>
-<p class="font-headline-md text-on-surface">1,000 CR</p>
-</div>
-<span class="text-secondary-container font-bold text-xl">$9.99</span>
-</div>
-</div>
-<!-- Bundle 2 -->
-<div class="group relative p-4 rounded-xl border border-secondary-container/40 hover:border-secondary-container transition-all cursor-pointer bg-secondary-container/5">
-<div class="absolute -top-3 right-4 bg-tertiary text-on-tertiary px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter">Best Value</div>
-<div class="flex justify-between items-center">
-<div>
-<p class="font-label-sm text-secondary-container">VELOCITY ELITE</p>
-<p class="font-headline-md text-on-surface">5,000 CR</p>
-</div>
-<div class="text-right">
-<span class="text-secondary-container font-bold text-xl">$39.99</span>
-<p class="text-[10px] text-tertiary font-bold tracking-tight">SAVE 20%</p>
-</div>
-</div>
-</div>
-<!-- Bundle 3 -->
-<div class="group relative p-4 rounded-xl border border-secondary-container/20 hover:border-secondary-container transition-all cursor-pointer bg-surface-container-lowest/50">
-<div class="flex justify-between items-center">
-<div>
-<p class="font-label-sm text-on-surface-variant">GALAXY BANK</p>
-<p class="font-headline-md text-on-surface">15,000 CR</p>
-</div>
-<span class="text-secondary-container font-bold text-xl">$99.99</span>
-</div>
-</div>
-</div>
-<div class="space-y-4 mt-4">
-<p class="font-label-sm text-on-surface-variant text-center uppercase tracking-widest">Secure UPI Payment</p>
-<div class="flex justify-center gap-6 opacity-60">
-<!-- UPI Placeholder Icons -->
-<div class="w-10 h-10 flex items-center justify-center grayscale hover:grayscale-0 transition-all">
-<span class="material-symbols-outlined text-4xl" data-weight="fill">account_balance</span>
-</div>
-<div class="w-10 h-10 flex items-center justify-center grayscale hover:grayscale-0 transition-all">
-<span class="material-symbols-outlined text-4xl" data-weight="fill">payments</span>
-</div>
-<div class="w-10 h-10 flex items-center justify-center grayscale hover:grayscale-0 transition-all">
-<span class="material-symbols-outlined text-4xl" data-weight="fill">credit_card</span>
-</div>
-</div>
-<button class="w-full bg-secondary-container text-surface py-4 rounded-xl font-extrabold tracking-widest uppercase hover:shadow-[0_0_20px_#00f1fe] transition-all">
-                            CHECKOUT NOW
-                        </button>
-</div>
-</section>
-<!-- Store Featured Item -->
-<section class="glass-panel rounded-xl overflow-hidden group">
-<div class="h-48 relative overflow-hidden">
-<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A sleek, high-end futuristic spaceship engine module with glowing green energy veins and metallic chrome plating. The object is depicted from a low angle to show scale, set against a dark hanger background with soft moody lighting. Minimalist HUD elements hover near the edges of the object." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnUK2QN1mbQySDWfoz0rmaMs1baoO6jX0O_uiH4gOp8S6jZ-Swrv7y2kosw1fvKMjIo7G7IPxp80Hm2CqHkQrTI-fZ6a6qFrPfNdR89pYzVHDWQ1r0PiiiTm_AMr3y-bNuIUPAEt8Rjm2D9Q82e4E5zklbwlpi0NPw8XbaM2_URsQ9qMt2RvysIzAGkFXdr_mO_RIPZqIyIBcN32l29sbO-HUF9o4Q31eT56IKPxUhTN3y9DanYh5O"/>
-<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
-<div class="absolute top-4 left-4">
-<span class="bg-tertiary/20 text-tertiary px-3 py-1 rounded-full text-[12px] font-bold border border-tertiary/40">FEATURED ITEM</span>
-</div>
-</div>
-<div class="p-6">
-<h4 class="font-headline-md text-on-surface mb-1">Quantum Coil Drive</h4>
-<p class="text-on-surface-variant text-[14px] leading-relaxed mb-4">Increase base acceleration by 15% on all Tier 3 ships. Ultra-rare drop.</p>
-<div class="flex justify-between items-center">
-<span class="font-headline-md text-secondary-container">8,500 CR</span>
-<button class="bg-white/5 border border-white/20 p-2 rounded-lg hover:bg-secondary-container hover:text-surface transition-all">
-<span class="material-symbols-outlined">add_shopping_cart</span>
+<button class="flex-1 py-3 bg-secondary-container text-surface-dim font-bold uppercase tracking-widest hover:brightness-110 transition-all active:scale-95">Buy Now</button>
+<button class="px-4 py-3 border border-secondary-container/30 text-secondary-container hover:bg-secondary-container/5 transition-all">
+<span class="material-symbols-outlined">info</span>
 </button>
 </div>
 </div>
+</div>
+<!-- Vehicle Card 2 -->
+<div class="glass-panel rounded-xl overflow-hidden cyber-glow-hover transition-all duration-500 group relative">
+<div class="absolute top-4 left-4 z-10">
+<span class="px-3 py-1 bg-secondary-container/10 text-secondary-container border border-secondary-container/30 rounded-full font-label-sm text-xs uppercase">Owned</span>
+</div>
+<div class="h-64 relative bg-gradient-to-b from-primary-container to-surface-dim overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A rugged, futuristic off-road electric truck with chunky illuminated tires and a matte black finish. The setting is a dusty red Martian-style landscape at dusk with twin moons in the sky. High-contrast lighting highlights the vehicle's angular armor plates. Digital concept art, ultra-hd." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADr6k70nPfdWG3DrMO2_eJrnZN-EYyWNdg__DlrQ6eMTSz-Mt2AXKMFnd02ky2GUqT-ANBKHq29FjaUryY5bCK_5sc8h80kSEIYPWTN6xgTf4L17OwLy84E4BOytAhePQf5fjOAuRTELPQpB18FUks5ynBHzd3nGUTtYgusqESDz7LB15fLzI4x8LhmS-LZeZj_1qcyy4tQPe-DgZCPG_ImUmvy3vwU0mGF4vKPdrseVSk0DlcccL3"/>
+</div>
+<div class="p-6 border-t border-white/5">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-secondary font-bold">MAMMOTH TR-1</h3>
+<p class="text-on-surface-variant font-label-sm uppercase tracking-widest">Heavy Utility Core</p>
+</div>
+<div class="text-right">
+<span class="block text-secondary-container font-bold text-xl">2,850 CR</span>
+<span class="text-on-surface-variant text-xs uppercase tracking-tighter">Resale Price</span>
+</div>
+</div>
+<div class="space-y-4 mb-6">
+<div>
+<div class="flex justify-between font-label-sm text-xs uppercase mb-1">
+<span class="text-on-surface-variant">Armor Level</span>
+<span class="text-secondary">95%</span>
+</div>
+<div class="segmented-progress">
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment"></div>
+</div>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="flex-1 py-3 border-2 border-secondary-container text-secondary-container font-bold uppercase tracking-widest hover:bg-secondary-container hover:text-surface-dim transition-all active:scale-95">Sell Asset</button>
+<button class="px-4 py-3 border border-secondary-container/30 text-secondary-container hover:bg-secondary-container/5 transition-all">
+<span class="material-symbols-outlined">garage</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Vehicle Card 3 -->
+<div class="glass-panel rounded-xl overflow-hidden cyber-glow-hover transition-all duration-500 group relative">
+<div class="h-64 relative bg-gradient-to-b from-primary-container to-surface-dim overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A minimalist, ultra-fast futuristic racing motorcycle with no hub wheels and a glowing neon white light strip along its spine. The bike is leaning into a high-speed turn on a rainy neon-lit city street at night. Professional cinematography style, deep blacks, vibrant blue and purple light reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOOJVQ-AQWU7S4pO9wfY5RFarkJwlsYBX1Nkcp1875xjzjnFD0CZp1cRl2jrMvpblqAYEtK-A5xBTMTsJrnu8cKpr2mjc34etO6x1Rp3kse6osIFW56-EHKuGbrXFRpcjEz4aOxNP0dY0kno0QgJ9P_p-nHjQHGrr-lYQv8QGMPexBbQwri1XDv8AszO-jieiCac_skgStOcktwuMLp6LrJXECIFgfeR_kPA7FpKGPamQP8FU_KCck"/>
+</div>
+<div class="p-6 border-t border-white/5">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-secondary font-bold">NEON STREAK</h3>
+<p class="text-on-surface-variant font-label-sm uppercase tracking-widest">Agility Spec-M</p>
+</div>
+<div class="text-right">
+<span class="block text-secondary-container font-bold text-xl">1,900 CR</span>
+<span class="text-on-surface-variant text-xs uppercase tracking-tighter">Current Value</span>
+</div>
+</div>
+<div class="space-y-4 mb-6">
+<div>
+<div class="flex justify-between font-label-sm text-xs uppercase mb-1">
+<span class="text-on-surface-variant">Handling</span>
+<span class="text-secondary">98%</span>
+</div>
+<div class="segmented-progress">
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+<div class="segment segment-active"></div>
+</div>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="flex-1 py-3 bg-secondary-container text-surface-dim font-bold uppercase tracking-widest hover:brightness-110 transition-all active:scale-95">Buy Now</button>
+<button class="px-4 py-3 border border-secondary-container/30 text-secondary-container hover:bg-secondary-container/5 transition-all">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Asset Performance Teaser (Asymmetric Element) -->
+<section class="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+<div class="lg:col-span-8 glass-panel p-8 rounded-2xl relative overflow-hidden group">
+<div class="absolute -right-20 -bottom-20 w-80 h-80 bg-secondary-container/5 rounded-full blur-[100px] group-hover:bg-secondary-container/10 transition-colors"></div>
+<div class="relative z-10">
+<h2 class="font-display-lg text-display-lg text-secondary mb-4 leading-tight">MARKET TRENDS</h2>
+<p class="text-body-lg text-on-surface-variant max-w-xl mb-8">Vehicle values are fluctuating in the Neon sector. Track your garage worth in real-time with our integrated neural analytics.</p>
+<div class="flex flex-wrap gap-12">
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-1">Sector Demand</span>
+<span class="font-display-lg-mobile text-display-lg-mobile text-tertiary">+12.4%</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-1">Total Assets</span>
+<span class="font-display-lg-mobile text-display-lg-mobile text-secondary">32,400 CR</span>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 glass-panel p-8 rounded-2xl border-secondary/20 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-secondary-container/20 rounded-lg">
+<span class="material-symbols-outlined text-secondary-container">show_chart</span>
+</div>
+<span class="font-label-sm text-xs text-tertiary">LIVE FEED</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-secondary mb-2">NEURAL SYNC</h4>
+<p class="text-sm text-on-surface-variant mb-6">Automate your trading strategy based on AI market predictions.</p>
+<button class="w-full py-4 border border-secondary-container/50 text-secondary-container font-bold uppercase tracking-widest rounded hover:bg-secondary-container/10 transition-all">Access Core</button>
+</div>
+</div>
 </section>
-</aside>
-</div>
 </main>
-<!-- Bottom Navigation Bar (Mobile View) -->
-<footer class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 h-20 bg-surface-container-lowest/20 backdrop-blur-2xl border-t border-white/5 rounded-t-full shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
-<div class="flex flex-col items-center justify-center text-on-surface-variant/60 pt-2 transition-all active:scale-90">
-<span class="material-symbols-outlined">explore</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Map</span>
-</div>
-<div class="flex flex-col items-center justify-center text-on-surface-variant/60 pt-2 transition-all active:scale-90">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Market</span>
-</div>
-<div class="flex flex-col items-center justify-center text-secondary border-t-2 border-secondary pt-2 scale-110">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Store</span>
-</div>
-<div class="flex flex-col items-center justify-center text-on-surface-variant/60 pt-2 transition-all active:scale-90">
-<span class="material-symbols-outlined">group</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Social</span>
-</div>
-</footer>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 h-20 bg-surface-container-lowest/20 backdrop-blur-2xl border-t border-white/5 rounded-t-full shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 pt-2 hover:text-secondary/80 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest mt-1">Map</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary border-t-2 border-secondary pt-2 scale-110 active:scale-90 transition-all cubic-bezier(0.34,1.56,0.64,1)" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest mt-1">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 pt-2 hover:text-secondary/80 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest mt-1">Store</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 pt-2 hover:text-secondary/80 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest mt-1">Social</span>
+</a>
+</nav>
+<!-- Micro-interaction Scripts -->
 <script>
-        // Micro-interaction for currency updates
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.classList.add('scale-95');
-                setTimeout(() => this.classList.remove('scale-95'), 150);
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'scale(0.95)';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = 'scale(1)';
             });
         });
 
-        // Atmospheric hover effects for cards
-        const cards = document.querySelectorAll('.glass-panel');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', e => {
+        // Simple parallax effect for card hover
+        document.querySelectorAll('.glass-panel').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
             });
         });
     </script>
