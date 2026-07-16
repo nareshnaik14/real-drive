@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Velocity HUD - Wallet &amp; Store</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Hanken+Grotesk:wght@300;400;500;600&amp;family=Geist:wght@100;300;400;500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:wght@100..900&amp;family=Space+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neon-glow-cyan {
+            text-shadow: 0 0 8px rgba(0, 241, 254, 0.6);
+        }
+        .neon-border-cyan {
+            box-shadow: 0 0 15px rgba(0, 241, 254, 0.15), inset 0 0 5px rgba(0, 241, 254, 0.1);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-panel-accent {
+            border-top: 1px solid rgba(0, 241, 254, 0.3);
+            border-left: 1px solid rgba(0, 241, 254, 0.1);
+        }
+        @keyframes flow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .animate-flow {
+            animation: flow 2s linear infinite;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #051424;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00f1fe;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#053900",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#2ae500",
+                        "secondary-fixed-dim": "#00dbe7",
+                        "inverse-surface": "#d4e4fa",
+                        "surface-dim": "#051424",
+                        "background": "#051424",
+                        "primary-container": "#0a0e1a",
+                        "surface-container-highest": "#273647",
+                        "surface-container-high": "#1c2b3c",
+                        "surface-container-lowest": "#010f1f",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#178f00",
+                        "on-secondary": "#00363a",
+                        "surface-bright": "#2c3a4c",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#dfe2f3",
+                        "on-primary-fixed": "#171b28",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#006a70",
+                        "surface-container": "#122131",
+                        "inverse-on-surface": "#233143",
+                        "tertiary": "#2ae500",
+                        "on-surface-variant": "#c7c6cc",
+                        "on-primary-container": "#777b8a",
+                        "on-primary-fixed-variant": "#434654",
+                        "surface-variant": "#273647",
+                        "on-tertiary-fixed": "#022100",
+                        "on-primary": "#2c303d",
+                        "on-secondary-fixed": "#002022",
+                        "on-surface": "#d4e4fa",
+                        "on-background": "#d4e4fa",
+                        "surface-container-low": "#0d1c2d",
+                        "on-tertiary-fixed-variant": "#095300",
+                        "secondary": "#ddfcff",
+                        "surface": "#051424",
+                        "tertiary-fixed": "#79ff5b",
+                        "outline": "#909096",
+                        "surface-tint": "#c3c6d7",
+                        "on-secondary-fixed-variant": "#004f54",
+                        "inverse-primary": "#5a5e6d",
+                        "primary-fixed-dim": "#c3c6d7",
+                        "primary": "#c3c6d7",
+                        "tertiary-container": "#011200",
+                        "secondary-container": "#00f1fe",
+                        "outline-variant": "#46464c",
+                        "secondary-fixed": "#74f5ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "margin-mobile": "20px",
+                        "unit": "4px",
+                        "container-max": "1440px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Geist"],
+                        "display-lg-mobile": ["Space Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "display-lg": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-lg overflow-x-hidden">
+<!-- Background Shader -->
+<div class="fixed inset-0 z-0">
+
+</div>
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full backdrop-blur-xl bg-surface/10 border-b border-white/10 shadow-[0_0_15px_rgba(0,241,254,0.15)] z-[100] h-16 flex justify-between items-center px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-secondary-container/50 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A futuristic portrait of a high-tech pilot wearing a sleek helmet with glowing cyan HUD elements. The character has a determined expression, with reflections of a digital cockpit visible on the visor. The overall style is high-contrast, cinematic, and set in a dark sci-fi universe with neon blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6meKiZTu8MoWMLbdJWX5KAI5ocTdK8Na6nIVifAcwuo5wFVvBWr8TvWUBKDKuWiPiX7xELcK3cJsQUHSXMl57EQUulsaL_0PfxtJDaUrocWb0HDqWus2dOu2Vux7LdF-yx7WnXTRM3sPJmOa4FRC9nxFlslCEj1ttZlKLoD7Uyxv31yBJAfbrzeKrfgL_XqsGWftjK78AjK51Dwdb3mpCRzzGyoiHqyFLxhtV5Ua5Ea2VH4MltHGL"/>
+</div>
+<span class="font-display-lg-mobile text-display-lg-mobile text-secondary drop-shadow-[0_0_8px_rgba(0,241,254,0.3)] font-bold tracking-tight">VELOCITY HUD</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-6 mr-8">
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-all" href="#">Map</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-all" href="#">Market</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold" href="#">Store</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-all" href="#">Social</a>
+</div>
+<button class="bg-secondary-container/10 border border-secondary-container/30 px-4 py-1.5 rounded-full flex items-center gap-2 group hover:bg-secondary-container/20 transition-all">
+<span class="material-symbols-outlined text-secondary-container">account_balance_wallet</span>
+<span class="font-headline-md text-[18px] text-secondary font-bold">12,450 CR</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="relative z-10 pt-24 pb-32 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Balance & Progress -->
+<div class="lg:col-span-8 flex flex-col gap-8">
+<!-- Hero Balance Card -->
+<section class="glass-panel glass-panel-accent rounded-xl p-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary-container/5 rounded-full blur-[80px] -mr-32 -mt-32"></div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 class="font-label-sm text-label-sm text-secondary-container uppercase tracking-widest mb-2">Total Credit Balance</h2>
+<div class="flex items-baseline gap-3">
+<span class="font-display-lg text-display-lg text-on-surface neon-glow-cyan">12,450.00</span>
+<span class="font-headline-md text-secondary-container/60">CR</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="bg-secondary-container text-surface px-6 py-3 rounded-lg font-bold flex items-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add_circle</span>
+                                TOP UP
+                            </button>
+<button class="border-2 border-secondary-container/30 text-secondary-container px-6 py-3 rounded-lg font-bold flex items-center gap-2 hover:bg-secondary-container/5 transition-all">
+<span class="material-symbols-outlined">send</span>
+                                TRANSFER
+                            </button>
+</div>
+</div>
+<!-- Earned Credits Mini-Dashboard -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-on-surface-variant">DISTANCE MILESTONE (KM)</span>
+<span class="font-label-sm text-tertiary">78% EARNED</span>
+</div>
+<div class="h-4 bg-surface-container-highest rounded-full overflow-hidden border border-white/5 relative">
+<div class="h-full bg-secondary-container shadow-[0_0_10px_#00f1fe]" style="width: 78.4%">
+<div class="w-full h-full animate-flow bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+</div>
+</div>
+<div class="flex justify-between font-label-sm text-on-surface-variant">
+<span>2,450 / 3,000 KM</span>
+<span class="text-secondary-container">+450 CR REWARD</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-on-surface-variant">DAILY VELOCITY BONUS</span>
+<span class="font-label-sm text-tertiary">COMPLETED</span>
+</div>
+<div class="h-4 bg-surface-container-highest rounded-full overflow-hidden border border-white/5">
+<div class="h-full bg-tertiary shadow-[0_0_10px_#2ae500]" style="width: 100%"></div>
+</div>
+<div class="flex justify-between font-label-sm text-on-surface-variant">
+<span>100 / 100 KM</span>
+<span class="text-tertiary">+100 CR ADDED</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Transaction History -->
+<section class="glass-panel rounded-xl p-8">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline-md text-headline-md text-on-surface">Recent Transactions</h3>
+<button class="text-secondary-container font-label-sm hover:underline">VIEW ALL</button>
+</div>
+<div class="space-y-4">
+<!-- Transaction Item -->
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">speed</span>
+</div>
+<div>
+<p class="font-body-lg text-on-surface font-medium">Earned: Distance Milestone</p>
+<p class="text-[14px] text-on-surface-variant">Mar 24, 2024 • 14:22</p>
+</div>
+</div>
+<span class="font-headline-md text-tertiary">+250.00 CR</span>
+</div>
+<!-- Transaction Item -->
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary-container">shopping_bag</span>
+</div>
+<div>
+<p class="font-body-lg text-on-surface font-medium">Purchased: Nitro Booster (x5)</p>
+<p class="text-[14px] text-on-surface-variant">Mar 23, 2024 • 09:15</p>
+</div>
+</div>
+<span class="font-headline-md text-on-surface">-1,200.00 CR</span>
+</div>
+<!-- Transaction Item -->
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary-container">account_balance</span>
+</div>
+<div>
+<p class="font-body-lg text-on-surface font-medium">Wallet Top-up: GPay UPI</p>
+<p class="text-[14px] text-on-surface-variant">Mar 22, 2024 • 18:45</p>
+</div>
+</div>
+<span class="font-headline-md text-secondary-container">+5,000.00 CR</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Store/Buy Credits -->
+<aside class="lg:col-span-4 flex flex-col gap-8">
+<!-- Purchase Credits Bento -->
+<section class="glass-panel rounded-xl p-8 flex flex-col gap-6">
+<h3 class="font-headline-md text-headline-md text-secondary-container">Buy Credits</h3>
+<div class="grid grid-cols-1 gap-4">
+<!-- Bundle 1 -->
+<div class="group relative p-4 rounded-xl border border-secondary-container/20 hover:border-secondary-container transition-all cursor-pointer bg-surface-container-lowest/50">
+<div class="flex justify-between items-center">
+<div>
+<p class="font-label-sm text-on-surface-variant">STARTER PACK</p>
+<p class="font-headline-md text-on-surface">1,000 CR</p>
+</div>
+<span class="text-secondary-container font-bold text-xl">$9.99</span>
+</div>
+</div>
+<!-- Bundle 2 -->
+<div class="group relative p-4 rounded-xl border border-secondary-container/40 hover:border-secondary-container transition-all cursor-pointer bg-secondary-container/5">
+<div class="absolute -top-3 right-4 bg-tertiary text-on-tertiary px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter">Best Value</div>
+<div class="flex justify-between items-center">
+<div>
+<p class="font-label-sm text-secondary-container">VELOCITY ELITE</p>
+<p class="font-headline-md text-on-surface">5,000 CR</p>
+</div>
+<div class="text-right">
+<span class="text-secondary-container font-bold text-xl">$39.99</span>
+<p class="text-[10px] text-tertiary font-bold tracking-tight">SAVE 20%</p>
+</div>
+</div>
+</div>
+<!-- Bundle 3 -->
+<div class="group relative p-4 rounded-xl border border-secondary-container/20 hover:border-secondary-container transition-all cursor-pointer bg-surface-container-lowest/50">
+<div class="flex justify-between items-center">
+<div>
+<p class="font-label-sm text-on-surface-variant">GALAXY BANK</p>
+<p class="font-headline-md text-on-surface">15,000 CR</p>
+</div>
+<span class="text-secondary-container font-bold text-xl">$99.99</span>
+</div>
+</div>
+</div>
+<div class="space-y-4 mt-4">
+<p class="font-label-sm text-on-surface-variant text-center uppercase tracking-widest">Secure UPI Payment</p>
+<div class="flex justify-center gap-6 opacity-60">
+<!-- UPI Placeholder Icons -->
+<div class="w-10 h-10 flex items-center justify-center grayscale hover:grayscale-0 transition-all">
+<span class="material-symbols-outlined text-4xl" data-weight="fill">account_balance</span>
+</div>
+<div class="w-10 h-10 flex items-center justify-center grayscale hover:grayscale-0 transition-all">
+<span class="material-symbols-outlined text-4xl" data-weight="fill">payments</span>
+</div>
+<div class="w-10 h-10 flex items-center justify-center grayscale hover:grayscale-0 transition-all">
+<span class="material-symbols-outlined text-4xl" data-weight="fill">credit_card</span>
+</div>
+</div>
+<button class="w-full bg-secondary-container text-surface py-4 rounded-xl font-extrabold tracking-widest uppercase hover:shadow-[0_0_20px_#00f1fe] transition-all">
+                            CHECKOUT NOW
+                        </button>
+</div>
+</section>
+<!-- Store Featured Item -->
+<section class="glass-panel rounded-xl overflow-hidden group">
+<div class="h-48 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A sleek, high-end futuristic spaceship engine module with glowing green energy veins and metallic chrome plating. The object is depicted from a low angle to show scale, set against a dark hanger background with soft moody lighting. Minimalist HUD elements hover near the edges of the object." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnUK2QN1mbQySDWfoz0rmaMs1baoO6jX0O_uiH4gOp8S6jZ-Swrv7y2kosw1fvKMjIo7G7IPxp80Hm2CqHkQrTI-fZ6a6qFrPfNdR89pYzVHDWQ1r0PiiiTm_AMr3y-bNuIUPAEt8Rjm2D9Q82e4E5zklbwlpi0NPw8XbaM2_URsQ9qMt2RvysIzAGkFXdr_mO_RIPZqIyIBcN32l29sbO-HUF9o4Q31eT56IKPxUhTN3y9DanYh5O"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary/20 text-tertiary px-3 py-1 rounded-full text-[12px] font-bold border border-tertiary/40">FEATURED ITEM</span>
+</div>
+</div>
+<div class="p-6">
+<h4 class="font-headline-md text-on-surface mb-1">Quantum Coil Drive</h4>
+<p class="text-on-surface-variant text-[14px] leading-relaxed mb-4">Increase base acceleration by 15% on all Tier 3 ships. Ultra-rare drop.</p>
+<div class="flex justify-between items-center">
+<span class="font-headline-md text-secondary-container">8,500 CR</span>
+<button class="bg-white/5 border border-white/20 p-2 rounded-lg hover:bg-secondary-container hover:text-surface transition-all">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</section>
+</aside>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile View) -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 h-20 bg-surface-container-lowest/20 backdrop-blur-2xl border-t border-white/5 rounded-t-full shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 pt-2 transition-all active:scale-90">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest">Map</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 pt-2 transition-all active:scale-90">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest">Market</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary border-t-2 border-secondary pt-2 scale-110">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest">Store</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 pt-2 transition-all active:scale-90">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest">Social</span>
+</div>
+</footer>
+<script>
+        // Micro-interaction for currency updates
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('scale-95');
+                setTimeout(() => this.classList.remove('scale-95'), 150);
+            });
+        });
+
+        // Atmospheric hover effects for cards
+        const cards = document.querySelectorAll('.glass-panel');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>
